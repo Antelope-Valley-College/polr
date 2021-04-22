@@ -111,13 +111,22 @@ class LinkFactory {
 
         $link->save();
 
-        $formatted_link = self::formatLink($link_ending, $secret_key);
-
         if ($return_object) {
             return $link;
         }
+        
+        $formatted_link = self::getLinkUrl($link);
 
         return $formatted_link;
+    }
+    
+    public static function getLinkUrl($link) {
+        // If the returned secret key is not null then set it to false.
+        $secret_key = $link->secret_key ? $link->secret_key : false;
+        
+        $formatted_link = self::formatLink($link->short_url, $secret_key);
+
+        return $formatted_link;        
     }
 
 }

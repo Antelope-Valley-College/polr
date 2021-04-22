@@ -58,3 +58,11 @@ a.new-user-add {
 .edit-long-link-btn {
     opacity: 0.45;
 }
+
+.copy-short-link-btn {
+    opacity: 0.45;
+}
+
+.qr-code-btn {
+    opacity: 0.45;
+}

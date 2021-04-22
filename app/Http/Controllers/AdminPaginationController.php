@@ -6,6 +6,8 @@ use Yajra\Datatables\Facades\Datatables;
 use App\Models\Link;
 use App\Models\User;
 use App\Helpers\UserHelper;
+use App\Factories\LinkFactory;
+
 
 class AdminPaginationController extends Controller {
     /**
@@ -15,6 +17,11 @@ class AdminPaginationController extends Controller {
      */
 
     /* Cell rendering functions */
+
+    public function renderShortUrlCell($link) {
+        return e($link->short_url) . ' <a class="btn btn-primary btn-xs copy-short-link-btn" data-clipboard-text="' . e(LinkFactory::getLinkUrl($link)) . '" data-toggle="tooltip" data-placement="button" title="Copy URL"><i class="fa fa-link copy-link-icon"></i></a>
+            <a class="btn btn-primary btn-xs qr-code-btn" url="' . e(LinkFactory::getLinkUrl($link)) . '" data-toggle="tooltip" data-placement="button" title="Show QR code"><i class="fa fa-qrcode qr-code-icon"></i></a>';
+    }
 
     public function renderLongUrlCell($link) {
         return '<a target="_blank" title="' . e($link->long_url) . '" href="'. e($link->long_url) .'">' . e(str_limit($link->long_url, 50)) . '</a>
@@ -141,13 +148,15 @@ class AdminPaginationController extends Controller {
     public function paginateAdminLinks(Request $request) {
         self::ensureAdmin();
 
-        $admin_links = Link::select(['short_url', 'long_url', 'clicks', 'created_at', 'creator', 'is_disabled']);
+        $admin_links = Link::select(['short_url', 'secret_key', 'long_url', 'clicks', 'created_at', 'creator', 'is_disabled']);
         return Datatables::of($admin_links)
             ->addColumn('disable', [$this, 'renderToggleLinkActiveCell'])
             ->addColumn('delete', [$this, 'renderDeleteLinkCell'])
             ->editColumn('clicks', [$this, 'renderClicksCell'])
+            ->editColumn('short_url', [$this, 'renderShortUrlCell'])
             ->editColumn('long_url', [$this, 'renderLongUrlCell'])
-            ->escapeColumns(['short_url', 'creator'])
+            ->removeColumn('secret_key')
+            ->escapeColumns(['creator'])
             ->make(true);
     }
 
@@ -156,12 +165,13 @@ class AdminPaginationController extends Controller {
 
         $username = session('username');
         $user_links = Link::where('creator', $username)
-            ->select(['id', 'short_url', 'long_url', 'clicks', 'created_at']);
+            ->select(['id', 'short_url', 'secret_key', 'long_url', 'clicks', 'created_at']);
 
         return Datatables::of($user_links)
             ->editColumn('clicks', [$this, 'renderClicksCell'])
+            ->editColumn('short_url', [$this, 'renderShortUrlCell'])
             ->editColumn('long_url', [$this, 'renderLongUrlCell'])
-            ->escapeColumns(['short_url'])
+            ->removeColumn('secret_key')
             ->make(true);
     }
 }

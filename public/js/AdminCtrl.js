@@ -102,6 +102,8 @@ polr.controller('AdminCtrl', function($scope, $compile, $timeout) {
         userEmail: '',
         userRole: ''
     };
+    
+    $scope.clipboard = null;
 
     $scope.syncHash = function() {
         var url = document.location.toString();
@@ -117,6 +119,36 @@ polr.controller('AdminCtrl', function($scope, $compile, $timeout) {
 
         $scope.reloadLinkTables();
     };
+    
+    $scope.mapBtnClick = function() {
+        $('.qr-code-btn').tooltip().off('click').click(function () {
+            var container = $('#qr-code-container');
+            var url = $(this).attr('url');
+            container.empty();
+            new QRCode(container.get(0), {
+                text: url,
+                width: 280,
+                height: 280
+            });
+            container.find('img').attr('alt', url);
+            $('#getQrcode').modal('show') ;
+        });
+        
+        $('.copy-short-link-btn').tooltip().bind('copied', function(event, message) {
+            $(this).attr('title', message)
+                .tooltip('fixTitle')
+                .tooltip('show')
+                .attr('title', "Copy URL")
+                .tooltip('fixTitle');
+            });
+        if ($scope.clipboard) { $scope.clipboard.destroy(); }                
+        $scope.clipboard = new Clipboard('.copy-short-link-btn');
+        $scope.clipboard.on('success', function(e) {
+            $(e.trigger).trigger('copied', ['Copied!']);
+        });
+
+
+    }
 
     // Initialise Datatables elements
     $scope.initTables = function() {
@@ -128,6 +160,7 @@ polr.controller('AdminCtrl', function($scope, $compile, $timeout) {
             'drawCallback': function () {
                 // Compile Angular bindings on each draw
                 $compile($(this))($scope);
+                $scope.mapBtnClick();
             }
         };
 
@@ -152,7 +185,7 @@ polr.controller('AdminCtrl', function($scope, $compile, $timeout) {
                 "ajax": BASE_API_PATH + 'admin/get_admin_links',
 
                 "columns": [
-                    {className: 'wrap-text', data: 'short_url', name: 'short_url'},
+                    {className: 'wrap-text', data: 'short_url', name: 'short_url'},                    
                     {className: 'wrap-text', data: 'long_url', name: 'long_url'},
                     {data: 'clicks', name: 'clicks'},
                     {data: 'created_at', name: 'created_at'},
@@ -174,7 +207,9 @@ polr.controller('AdminCtrl', function($scope, $compile, $timeout) {
                 {data: 'clicks', name: 'clicks'},
                 {data: 'created_at', name: 'created_at'}
             ]
-        }, datatables_config));
+        }, datatables_config));        
+        
+        $scope.mapBtnClick();
     };
 
     $scope.reloadLinkTables = function () {
@@ -185,6 +220,8 @@ polr.controller('AdminCtrl', function($scope, $compile, $timeout) {
         }
 
         $scope.datatables['user_links_table'].ajax.reload(null, false);
+        
+        $scope.mapBtnClick();
     };
 
     $scope.reloadUserTables = function () {
