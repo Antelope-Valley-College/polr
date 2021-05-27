@@ -143,6 +143,27 @@ class SetupController extends Controller {
             $mail_enabled = false;
         }
 
+        $login_modes = array();
+        if ($request->input('app:saml_enable')) {
+            $login_modes[] = 'SAML';
+        }
+        $login_modes = implode(',', $login_modes);
+
+        $saml_debug = $request->input('saml:saml_debug') ? 'true' : 'false';
+        $saml_primary = $request->input('saml:saml_primary') ? 'true' : 'false';
+        $saml_sp_entityid = $request->input('saml:sp_entityid');
+        $saml_sp_servicename = $request->input('saml:sp_servicename');
+        $saml_sp_desc = $request->input('saml:sp_desc');
+        $saml_idp_entityid = $request->input('saml:idp_entityid');
+        $saml_idp_name = $request->input('saml:idp_name');
+        $saml_idp_x509cert = $request->input('saml:idp_x509cert');
+        $saml_idp_sso = $request->input('saml:idp_sso');
+        $saml_idp_slo = $request->input('saml:idp_slo');
+        $saml_user_attr = $request->input('saml:admin_attr');
+        $saml_user_regex = $request->input('saml:admin_regex');
+        $saml_admin_attr = $request->input('saml:admin_attr');
+        $saml_admin_regex = $request->input('saml:admin_regex');
+
         $compiled_configuration = view('env', [
             'APP_KEY' => $app_key,
             'APP_NAME' => $app_name,
@@ -187,6 +208,21 @@ class SetupController extends Controller {
             'ST_PSEUDOR_ENDING' => $st_pseudor_ending,
             'ST_ADV_ANALYTICS' => $st_adv_analytics,
 
+            'POLR_LOGIN_MODES' => $login_modes,
+            'SAML_DEBUG' => $saml_debug,
+            'SAML_PRIMARY_LOGIN' => $saml_primary,
+            'SAML_ENTITYID' => $saml_sp_entityid,
+            'SAML_SERVICE_NAME' => $saml_sp_servicename,
+            'SAML_SERVICE_DESC' => $saml_sp_desc,
+            'SAML_IDP_ENTITYID' => $saml_idp_entityid,
+            'SAML_IDP_NAME' => $saml_idp_name,
+            'SAML_IDP_X509CERT' => $saml_idp_x509cert,
+            'SAML_IDP_SSO_URL' => $saml_idp_sso,
+            'SAML_IDP_SLO_URL' => $saml_idp_slo,            
+            'SAML_USER_ATTR' => $saml_user_attr,
+            'SAML_USER_REGEX' => $saml_user_regex,
+            'SAML_ADMIN_ATTR' => $saml_admin_attr,
+            'SAML_ADMIN_REGEX' => $saml_admin_regex,
             'TMP_SETUP_AUTH_KEY' => $setup_auth_key
         ])->render();
 

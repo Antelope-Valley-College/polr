@@ -17,6 +17,11 @@ class VerifyCsrfToken extends BaseVerifier
             return $next($request);
         }
 
+        if (in_array('SAML', explode(',', env('POLR_LOGIN_MODES'))) && $request->is('saml/sp/*')) {
+            // Exclude SAML pages from CSRF protection
+            return $next($request);
+        }
+
         return parent::handle($request, $next);
     }
 }

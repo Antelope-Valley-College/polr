@@ -178,6 +178,99 @@ Setup
                 <option value='true'>On -- each user receives an API key on signup</option>
             </select>
 
+            <h4>
+                SAML2 Settings
+                <setup-tooltip content="Enables use of a SAML2-compliant IdP (Identity Provider)."></setup-tooltip>
+            </h4>
+            <p>To use this, the IdP must send over the following attributes:</p>
+            <table class="table">
+            <tr><th scope="row">NameID</th><td>The NameID must be an immutable value that uniquely identifies a user. If a NameID does not have an associated account, a new one is created. If the username exists, it is converted int a SSO account and can no longer login using a password.</td></tr>
+            <tr><th scope="row">username</th><td>This must be the username of the person logging in.</td></tr>
+            <tr><th scope="row">email</th><td>The current email address of the user.</td></tr>
+            </table>
+            <p>The IdP may send over an additional attribute you specify to see if the account should be an admin account or not.</p>
+            <p>If SAML SSO is turned off, users may request a password reset to gain access once again.</p>
+
+            <p>
+                <input type='checkbox' class='form-check-input' name='saml:saml_primary'> Enable SAML
+            </p>            
+
+            <p>
+                <input type='checkbox' class='form-check-input' name='saml:saml_primary'> Use SAML As Primary Login
+                <setup-tooltip content="If SAML is enabled and this is checked, when users are redirected to login or click on the login menu link, they are redirected to their SSO login page. Local logins can still be used by adding ?local_login=true to the login URL."></setup-tooltip>
+            </p>            
+
+            <p>
+                <input type='checkbox' class='form-check-input' name='saml:saml_debug'> Enable SAML Debugging
+                <setup-tooltip content="Turns on the debug functionality of the SAML library. Recommended for test environments."></setup-tooltip>
+            </p>            
+
+            <p>
+                EntityID (This website):
+                <setup-tooltip content="Defines the EntityID value for this website. The IdP needs this value to know which service is asking for a login. This is usually the base URL to this website or application."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:sp_entityid' placeholder='https://polr.example.com'>
+
+            <p>Service Name:</p>
+            <input type='text' class='form-control' name='saml:sp_servicename' placeholder='Polr'>
+
+            <p>Service Description:</p>
+            <input type='text' class='form-control' name='saml:sp_desc' placeholder='URL shortening application'>
+
+            <p>
+                IdP EntityID:
+                <setup-tooltip content="Provide the EntityID of the remote IdP system. This is not always the site URL."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:idp_entityid' placeholder='https://idp.shibboleth.org'>
+
+            <p>
+                IdP Name:
+                <setup-tooltip content="This text is displayed on a button when when logging in on the login page or through the login menu. Clicking it will direct the user to their IdP."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:idp_name' placeholder='My IdP'>
+
+            <p>
+                IdP Certificate:
+                <setup-tooltip content="Provide the signing certificate in PEM (base64) format. This is contained in the metadata file."></setup-tooltip>
+            </p>
+            <textarea class='form-control' name='saml:idp_x509cert' placeholder='MIID...'></textarea>
+
+            <p>
+                IdP Single Sign-On URL:
+                <setup-tooltip content="This is the URL that users are directed to for login. It is provided in the IdP metadata file. This SAML library only supports HTTP-Redirect, as opposed to HTTP-Post. This is required for SAML to work."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:idp_sso' placeholder='IdP Single Sign-On URL'>
+
+            <p>
+                IdP Single Log-Off URL:
+                <setup-tooltip content="This is the URL that users are directed to for SAML logout. It is provided in the IdP metadata file. This is optional and not supported by some IdPs."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:idp_slo' placeholder='IdP Single Log-Off URL'>
+
+            <p>
+                User Attribute:
+                <setup-tooltip content="If present with the user regular expression, the IdP must be configured to pass this attribute. In order to be allowed to use this application, the specified attribute of the user must match the regular expression. The attribute may be the username or email attribute."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:user_attr' placeholder='role'>
+
+            <p>
+                User Regular Expression:
+                <setup-tooltip content="If the attribute specified above matches this regular expression, the the account is turned into an admin, otherwise it is demoted to a regular user. If not provided, no chages are made to whether an account is an admin or not."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:user_regex' placeholder='/admin/'>
+            <p>
+                Admin Attribute:
+                <setup-tooltip content="If present with the regular expression, the IdP must be configured to "></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:admin_attr' placeholder='role'>
+
+            <p>
+                Admin Regular Expression:
+                <setup-tooltip content="If the attribute specified above matches this regular expression, the the account is turned into an admin, otherwise it is demoted to a regular user. If not provided, no chages are made to whether an account is an admin or not."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='saml:admin_regex' placeholder='/admin/'>
+
+
             <h4>Other Settings</h4>
 
             <p>

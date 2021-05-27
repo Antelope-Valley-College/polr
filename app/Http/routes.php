@@ -12,6 +12,15 @@ if (env('POLR_ALLOW_ACCT_CREATION')) {
     $app->post('/signup', ['as' => 'psignup', 'uses' => 'UserController@performSignup']);
 }
 
+/* Optional SAML endpoints */
+if (in_array('SAML', explode(',', env('POLR_LOGIN_MODES')))) {
+    $app->get('/saml/sp/acs', ['as' => 'acs', 'uses' => 'SamlController@processLogin']);
+    $app->post('/saml/sp/acs', ['as' => 'pacs', 'uses' => 'SamlController@processLogin']);
+    $app->get('/saml/sp/metadata', ['as' => 'metadata', 'uses' => 'SamlController@sendMetadata']);
+    $app->get('/saml/sp/sls', ['as' => 'acs', 'uses' => 'SamlController@processLogout']);
+    $app->post('/saml/sp/sls', ['as' => 'pacs', 'uses' => 'SamlController@processLogout']);
+}
+
 /* GET endpoints */
 
 $app->get('/', ['as' => 'index', 'uses' => 'IndexController@showIndexPage']);

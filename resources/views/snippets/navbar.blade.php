@@ -39,6 +39,9 @@
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
                     <div class="dropdown-menu pull-right login-dropdown-menu" id="dropdown">
                         <h2>Login</h2>
+                        @if (in_array('SAML', explode(',', env('POLR_LOGIN_MODES'))) == true)                                        
+                            <a class="btn btn-primary form-control login-form-submit" href='{{route('login')}}?use_saml=true'>Login using {{env('SAML_IDP_NAME')}}</a>
+                        @endif
                         <form action="login" method="POST" accept-charset="UTF-8">
                             <input type="text" name="username" placeholder='Username' size="30" class="form-control login-form-field" />
                             <input type="password" name="password" placeholder='Password' size="30" class="form-control login-form-field" />

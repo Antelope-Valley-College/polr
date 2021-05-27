@@ -10,6 +10,13 @@
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <form action="login" method="POST">
+            @if (in_array('SAML', explode(',', env('POLR_LOGIN_MODES'))) == true)                
+            <p class='login-prompts'>
+                <a class="login-submit btn btn-primary btn-lg" href='{{route('login')}}?use_saml=true'>Login using {{env('SAML_IDP_NAME')}}</a>
+            </p>
+            <hr />
+            @endif
+
             <input type="text" placeholder="username" name="username" class="form-control login-field" />
             <input type="password" placeholder="password" name="password" class="form-control login-field" />
             <input type="hidden" name='_token' value='{{csrf_token()}}' />

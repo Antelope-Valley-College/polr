@@ -38,6 +38,7 @@ class UserHelper {
     public static function checkCredentials($username, $password) {
         $user = User::where('active', 1)
             ->where('username', $username)
+            ->where('password', '!=', '')
             ->first();
 
         if ($user == null) {
@@ -105,5 +106,17 @@ class UserHelper {
 
     public static function getUserByEmail($email, $inactive=false) {
         return self::getUserBy('email', $email, $inactive);
+    }
+
+    public static function getSamlUser($nameid) {
+        return User::where('recovery_key', $nameid)->where('password', '')->first();
+    }
+
+    public static function convertToSamlUser($username, $nameid) {
+        $user = self::getUserByUsername($username);
+        $user->password = '';
+        $user->recovery_key = $nameid;
+        $user->save();
+        return $user;
     }
 }

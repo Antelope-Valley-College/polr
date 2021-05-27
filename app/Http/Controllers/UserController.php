@@ -8,7 +8,12 @@ use Illuminate\Http\Request;
 use App\Helpers\CryptoHelper;
 use App\Helpers\UserHelper;
 
+use OneLogin\Saml2\Auth;
+use OneLogin\Saml2\Utils;
+use OneLogin\Saml2\Error;
+
 use App\Factories\UserFactory;
+use App\Factories\SamlFactory;
 
 class UserController extends Controller {
     /**
@@ -17,6 +22,13 @@ class UserController extends Controller {
      * @return Response
      */
     public function displayLoginPage(Request $request) {
+        if (in_array('SAML', explode(',', env('POLR_LOGIN_MODES'))) && (in_array(strtolower(env('SAML_PRIMARY_LOGIN')), array('true','1')) || $request->input('use_saml'))) {
+            if (!$request->input('use_local')) {
+                $auth = new Auth(SamlFactory::getSettings());
+                $auth->login();
+                return;
+            }
+        }
         return view('login');
     }
 
@@ -29,8 +41,23 @@ class UserController extends Controller {
     }
 
     public function performLogoutUser(Request $request) {
+        if (in_array('SAML', explode(',', env('POLR_LOGIN_MODES'))) && env('SAML_IDP_SLO_URL')) {
+            $auth = new Auth(SamlFactory::getSettings());
+
+            $returnTo = null;
+            $paramters = array();
+            $nameId = null;
+            $sessionIndex = null;
+            $nameIdFormat = null;
+            $nameIdNameQualifier = null;
+            $nameIdSPNameQualifier = null;
+
+            $auth->logout($returnTo, $paramters, $nameId, $sessionIndex, false, $nameIdFormat, $nameIdNameQualifier, $nameIdSPNameQualifier);
+            return;
+        }
         $request->session()->forget('username');
         $request->session()->forget('role');
+        $request->session()->forget('saml');
         return redirect()->route('index');
     }
 
@@ -148,6 +175,10 @@ class UserController extends Controller {
 
         if (!$user) {
             return redirect(route('lost_password'))->with('error', 'Email is not associated with a user.');
+        }
+
+        if ($user->password == '' && in_array('SAML', explode(',', env('POLR_LOGIN_MODES')))) {
+            return redirect(route('lost_password'))->with('error', 'This account uses Single Sign-On.');
         }
 
         $recovery_key = UserHelper::resetRecoveryKey($user->username);

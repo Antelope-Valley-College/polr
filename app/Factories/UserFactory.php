@@ -30,4 +30,23 @@ class UserFactory {
         return $user;
     }
 
+    public static function createSamlUser($username, $email, $nameid, $ip='127.0.0.1', $api_key=false, $api_active=0, $role=false) {
+        if (!$role) {
+            $role = UserHelper::$USER_ROLES['default'];
+        }
+
+        $user = new User;
+        $user->username = $username;
+        $user->password = ''; // No hash == cannot login
+        $user->email = $email;
+        $user->recovery_key = $nameid; // The nameid becomes the user lookup. This user will never be able to recover their key.
+        $user->active = 1; // Always active
+        $user->ip = $ip;
+        $user->role = $role;
+        $user->api_key = $api_key;
+        $user->api_active = $api_active;
+
+        $user->save();
+        return $user;
+    }
 }
