@@ -23,12 +23,9 @@ Polr is written in PHP and Lumen, using MySQL as its primary database.
 
 Installation TL;DR: clone or download this repository, set document root to `public/`, create MySQL database, go to `yoursite.com/setup` and follow instructions.
 
-### Demo
+### SAML Support(!)
 
-To test out the demo, head to [demo.polr.me](http://demo.polr.me) and use the following credentials:
-
-- Username: `demo-admin`
-- Password: `demo-admin`
+This fork supports SAML 2 integration. SAML integration provides authorization for internal accounts. Accounts can be created on demand. Attributes can be used to flag an account as a permitted user and as an administrator and are always applied or removed at SAML login. SAML can be configured in addition to or instead of internal authorization. A local account can be converted to a SAML account simply by logging in to an IdP with the same username as the local account. A SAML account can be reverted to a local account by resetting the password.
 
 ### Upgrading Polr
 *Upgrading from 1.x:*
@@ -64,7 +61,7 @@ Polr uses [Semantic Versioning](http://semver.org/)
 #### License
 
 
-    Copyright (C) 2013-2018 Chaoyi Zha
+    Copyright (C) 2013-2018 Chaoyi Zha, 2021 Antelope Valley College
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
