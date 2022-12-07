@@ -64,7 +64,7 @@ Polr uses [Semantic Versioning](http://semver.org/)
 #### License
 
 
-    Copyright (C) 2013-2018 Chaoyi Zha
+    Copyright (C) 2013-2018 Chaoyi Zha, 2021-2022 Antelope Valley College
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
