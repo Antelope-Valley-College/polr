@@ -88,7 +88,6 @@ class Handler extends ExceptionHandler
                 // Handle HTTP exceptions thrown by public-facing controllers
                 $status_code = $e->getStatusCode();
                 $status_message = $e->getMessage();
-                erorr_log(print_r($e, true));
                 if ($status_code == 500) {
                     // Render a nice error page for 500s
                     return response(view('errors.500'), 500);
