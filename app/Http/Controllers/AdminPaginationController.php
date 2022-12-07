@@ -1,17 +1,19 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Facades\Datatables;
+use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
 
 use App\Models\Link;
 use App\Models\User;
 use App\Helpers\UserHelper;
 use App\Factories\LinkFactory;
 
+error_log('AdminPaginationController');
 
 class AdminPaginationController extends Controller {
     /**
-     * Process AJAX Datatables pagination queries from the admin panel.
+     * Process AJAX DataTables pagination queries from the admin panel.
      *
      * @return Response
      */
@@ -136,11 +138,12 @@ class AdminPaginationController extends Controller {
         self::ensureAdmin();
 
         $admin_users = User::select(['username', 'email', 'created_at', 'active', 'api_key', 'api_active', 'api_quota', 'role', 'id']);
-        return Datatables::of($admin_users)
-            ->addColumn('api_action', [$this, 'renderAdminApiActionCell'])
-            ->addColumn('toggle_active', [$this, 'renderToggleUserActiveCell'])
-            ->addColumn('change_role', [$this, 'renderChangeUserRoleCell'])
-            ->addColumn('delete', [$this, 'renderDeleteUserCell'])
+        return DataTables::of($admin_users)
+            ->addColumn('api_action', function($admin_user) {return $this->renderAdminApiActionCell($admin_user);})
+            ->addColumn('toggle_active', function($admin_user) {return $this->renderToggleUserActiveCell($admin_user);})
+            ->addColumn('change_role', function($admin_user) {return $this->renderChangeUserRoleCell($admin_user);})
+            ->addColumn('delete', function($admin_user) {return $this->renderDeleteUserCell($admin_user);})
+            ->editColumn('created_at', function ($user_link) {return Carbon::parse($user_link->created_at)->format('Y-m-d H:i:s');})
             ->escapeColumns(['username', 'email'])
             ->make(true);
     }
@@ -149,12 +152,13 @@ class AdminPaginationController extends Controller {
         self::ensureAdmin();
 
         $admin_links = Link::select(['short_url', 'secret_key', 'long_url', 'clicks', 'created_at', 'creator', 'is_disabled']);
-        return Datatables::of($admin_links)
-            ->addColumn('disable', [$this, 'renderToggleLinkActiveCell'])
-            ->addColumn('delete', [$this, 'renderDeleteLinkCell'])
-            ->editColumn('clicks', [$this, 'renderClicksCell'])
-            ->editColumn('short_url', [$this, 'renderShortUrlCell'])
-            ->editColumn('long_url', [$this, 'renderLongUrlCell'])
+        return DataTables::of($admin_links)
+            ->addColumn('disable', function($admin_link) {return $this->renderToggleLinkActiveCell($admin_link);})
+            ->addColumn('delete', function($admin_link) {return $this->renderDeleteLinkCell($admin_link);})
+            ->editColumn('clicks', function($admin_link) {return $this->renderClicksCell($admin_link);})
+            ->editColumn('short_url', function($admin_link) {return $this->renderShortUrlCell($admin_link);})
+            ->editColumn('long_url', function($admin_link) {return $this->renderLongUrlCell($admin_link);})
+            ->editColumn('created_at', function ($user_link) {return Carbon::parse($user_link->created_at)->format('Y-m-d H:i:s');})
             ->removeColumn('secret_key')
             ->escapeColumns(['creator'])
             ->make(true);
@@ -167,10 +171,12 @@ class AdminPaginationController extends Controller {
         $user_links = Link::where('creator', $username)
             ->select(['id', 'short_url', 'secret_key', 'long_url', 'clicks', 'created_at']);
 
-        return Datatables::of($user_links)
-            ->editColumn('clicks', [$this, 'renderClicksCell'])
-            ->editColumn('short_url', [$this, 'renderShortUrlCell'])
-            ->editColumn('long_url', [$this, 'renderLongUrlCell'])
+        return DataTables::of($user_links)
+            ->editColumn('clicks', function($user_link) {return $this->renderClicksCell($user_link);})
+            ->editColumn('short_url', function($user_link) {return $this->renderShortUrlCell($user_link);})
+            ->editColumn('long_url', function($user_link) {return $this->renderLongUrlCell($user_link);})
+            ->editColumn('created_at', function ($user_link) {return Carbon::parse($user_link->created_at)->format('Y-m-d H:i:s');})
+            ->escapeColumns([])
             ->removeColumn('secret_key')
             ->make(true);
     }

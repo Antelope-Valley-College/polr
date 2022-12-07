@@ -1,19 +1,20 @@
 {
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "name": "cydrobolt/polr",
+    "description": "The Polr URL Shortener.",
+    "keywords": ["url-shortener", "url", "cms"],
+    "license": "GPLv2+",
+    "type": "project",    
     "require": {
         "php": "^8.0.2",
+        "geoip2/geoip2": "^2.13",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
+        "laravel/helpers": "^1.5",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "onelogin/php-saml": "^4.1",
-        "yajra/laravel-datatables-oracle": "^10.2",
         "torann/geoip": "^3.0",
-        "geoip2/geoip2": "^2.13"
+        "yajra/laravel-datatables-oracle": "^10.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
