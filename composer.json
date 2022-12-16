@@ -51,6 +51,14 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
+        ,
+        "update-maxmind-db": [
+            "@putenv CACHE_DRIVER=array",
+            "@php artisan geoip:update",
+            "@php artisan config:clear",
+            "@php artisan config:cache",
+            "@composer dump-autoload"
+        ]
     },
     "extra": {
         "laravel": {

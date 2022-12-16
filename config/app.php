@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Polr'),
 
     /*
     |--------------------------------------------------------------------------
@@ -194,6 +194,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /*
+         * GeoIP
+         */
+        \Torann\GeoIP\GeoIPServiceProvider::class,
 
     ],
 
