@@ -25,13 +25,28 @@ Setup
         <form class='setup-form' method='POST' action='/setup'>
             <h4>Database Configuration</h4>
 
+            <p>
+                Database URL:
+                <setup-tooltip content="If supplied, this will override all other database fields. Enter the database URL in the format 'driver://username:password@host:port/database?options'"></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='db:url' value=''>
+
             <p>Database Host:</p>
             <input type='text' class='form-control' name='db:host' value='localhost'>
 
             <p>Database Port:</p>
             <input type='text' class='form-control' name='db:port' value='3306'>
 
-            <p>Database Username:</p>
+            <p>
+                Database Unix Socket:
+                <setup-tooltip content="If supplied, this will override the host and port fields below. Enter the absolute path to the unix file socket that will be used to access the database."></setup-tooltip>
+            </p>
+            <input type='text' class='form-control' name='db:unix_socket' value=''>
+
+            <p>
+                Database Username:
+                <setup-tooltip content="For security reasons, we encourage you to not use the root account in production environments."></setup-tooltip>
+            </p>
             <input type='text' class='form-control' name='db:username' value='root'>
 
             <p>Database Password:</p>
@@ -249,24 +264,24 @@ Setup
 
             <p>
                 User Attribute:
-                <setup-tooltip content="If present with the user regular expression, the IdP must be configured to pass this attribute. In order to be allowed to use this application, the specified attribute of the user must match the regular expression. The attribute may be the username or email attribute."></setup-tooltip>
+                <setup-tooltip content="If present with the user regular expression, the IdP must be configured to pass this attribute. In order to be allowed to use this application, the specified attribute of the user must match the regular expression. The attribute may be but is not limited to the username or email attribute."></setup-tooltip>
             </p>
             <input type='text' class='form-control' name='saml:user_attr' placeholder='role'>
 
             <p>
                 User Regular Expression:
-                <setup-tooltip content="If the attribute specified above matches this regular expression, the the account is turned into an admin, otherwise it is demoted to a regular user. If not provided, no chages are made to whether an account is an admin or not."></setup-tooltip>
+                <setup-tooltip content="If the user attribute specified above matches this regular expression, the the account is turned into an admin, otherwise it is demoted to a regular user. If not provided, no chages are made to whether an account is an admin or not."></setup-tooltip>
             </p>
-            <input type='text' class='form-control' name='saml:user_regex' placeholder='/admin/'>
+            <input type='text' class='form-control' name='saml:user_regex' placeholder='/user/'>
             <p>
                 Admin Attribute:
-                <setup-tooltip content="If present with the regular expression, the IdP must be configured to "></setup-tooltip>
+                <setup-tooltip content="If present with the admin regular expression, the IdP must be configured to pass this attribute. The attribute may be but is not limited to the username or email attribute."></setup-tooltip>
             </p>
             <input type='text' class='form-control' name='saml:admin_attr' placeholder='role'>
 
             <p>
                 Admin Regular Expression:
-                <setup-tooltip content="If the attribute specified above matches this regular expression, the the account is turned into an admin, otherwise it is demoted to a regular user. If not provided, no chages are made to whether an account is an admin or not."></setup-tooltip>
+                <setup-tooltip content="If the admin attribute specified above matches this regular expression, the account is turned into an admin, otherwise it is demoted to a regular user. If not provided, no chages are made to whether an account is an admin or not."></setup-tooltip>
             </p>
             <input type='text' class='form-control' name='saml:admin_regex' placeholder='/admin/'>
 

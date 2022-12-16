@@ -2,34 +2,65 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\Response;
+use Throwable;
 
-use App\Exceptions\Api\ApiException;
-
-class Handler extends ExceptionHandler {
+class Handler extends ExceptionHandler
+{
     /**
-     * A list of the exception types that should not be reported.
+     * A list of exception types with their corresponding custom log levels.
      *
-     * @var array
+     * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
+     */
+    protected $levels = [
+        //
+    ];
+
+    /**
+     * A list of the exception types that are not reported.
+     *
+     * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
         HttpException::class,
     ];
 
     /**
+     * A list of the inputs that are never flashed to the session on validation exceptions.
+     *
+     * @var array<int, string>
+     */
+    protected $dontFlash = [
+        'current_password',
+        'password',
+        'password_confirmation',
+    ];
+
+    /**
+     * Register the exception handling callbacks for the application.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->reportable(function (Throwable $e) {
+            //
+        });
+    }
+
+    /**
      * Report or log an exception.
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $e
+     * @param  \Throwable  $e
      * @return void
      */
-    public function report(Exception $e)
+    public function report(Throwable $e)
     {
+        # error_log(print_r($e, true));
         return parent::report($e);
     }
 
@@ -37,10 +68,10 @@ class Handler extends ExceptionHandler {
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $e
+     * @param  \Throwable  $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $e)
+    public function render($request, Throwable $e)
     {
         if (env('APP_DEBUG') != true) {
             // Render nice error pages if debug is off
@@ -57,7 +88,6 @@ class Handler extends ExceptionHandler {
                 // Handle HTTP exceptions thrown by public-facing controllers
                 $status_code = $e->getStatusCode();
                 $status_message = $e->getMessage();
-
                 if ($status_code == 500) {
                     // Render a nice error page for 500s
                     return response(view('errors.500'), 500);

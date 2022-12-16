@@ -1,15 +1,20 @@
 <?php
 
 namespace App\Http\Middleware;
-use Laravel\Lumen\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
-class VerifyCsrfToken extends BaseVerifier
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
+
+class VerifyCsrfToken extends Middleware
 {
     /**
-     * Exclude API routes from CSRF protection.
+     * The URIs that should be excluded from CSRF verification.
      *
-     * @var array
+     * @var array<int, string>
      */
+    protected $except = [
+        //
+    ];
+
     public function handle($request, \Closure $next) {
         if ($request->is('api/v*/action/*') || $request->is('api/v*/data/*')) {
             // Exclude public API from CSRF protection

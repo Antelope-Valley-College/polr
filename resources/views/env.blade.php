@@ -30,10 +30,14 @@ POLR_SETUP_RAN={{$POLR_SETUP_RAN}}
 MAXMIND_LICENSE_KEY="{{$MAXMIND_LICENSE_KEY}}"
 
 DB_CONNECTION=mysql
+# Set if your provider requires a connection URL
+DB_URL="{{{$DB_URL}}}"
 # Set to your DB host (e.g localhost)
 DB_HOST="{{{$DB_HOST}}}"
 # DB port (e.g 3306)
 DB_PORT={{$DB_PORT}}
+# Set if you connect to your database over a unix socket
+DB_SOCKET="{{{$DB_SOCKET}}}"
 # Set to your DB name (e.g polr)
 DB_DATABASE="{{{$DB_DATABASE}}}"
 # DB credentials
