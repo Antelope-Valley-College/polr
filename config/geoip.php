@@ -103,6 +103,7 @@ return [
     */
 
     // 'cache_tags' => ['torann-geoip-location'],
+    'cache_tags' => in_array(env('CACHE_DRIVER', 'array'), ["file", "database","dynamodb"]) ? null : ['torann-geoip-location'],
 
     /*
     |--------------------------------------------------------------------------
