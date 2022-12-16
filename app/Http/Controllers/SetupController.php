@@ -176,8 +176,10 @@ class SetupController extends Controller {
             'POLR_SETUP_RAN' => $polr_setup_ran,
             'MAXMIND_LICENSE_KEY' => $maxmind_license_key,
 
+            'DB_URL' => $db_url,
             'DB_HOST' => $db_host,
             'DB_PORT' => $db_port,
+            'DB_SOCKET' => $db_unix_socket,
             'DB_USERNAME' => $db_username,
             'DB_PASSWORD' => $db_password,
             'DB_DATABASE' => $db_name,
