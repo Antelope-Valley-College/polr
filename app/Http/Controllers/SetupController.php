@@ -75,11 +75,13 @@ class SetupController extends Controller {
         $date_today = date('F jS, Y');
 
         $polr_setup_ran = 'true';
-        $db_host = $request->input('db:host');
-        $db_port = $request->input('db:port');
-        $db_name = $request->input('db:name');
-        $db_username = $request->input('db:username');
-        $db_password = $request->input('db:password');
+        $db_url = $request->input('db:url');
+        $db_unix_socket = $db_url ? '' : $request->input('db:unix_socket');
+        $db_host = $db_url || $db_unix_socket ? '' : $request->input('db:host');
+        $db_port = $db_url || $db_unix_socket ? '' : $request->input('db:port');
+        $db_name = $db_url ? '' : $request->input('db:name');
+        $db_username = $db_url ? '' : $request->input('db:username');
+        $db_password = $db_url ? '' : $request->input('db:password');
 
         $st_public_interface = $request->input('setting:public_interface');
 
