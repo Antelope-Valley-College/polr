@@ -29,34 +29,34 @@ Setup
                 Database URL:
                 <setup-tooltip content="If supplied, this will override all other database fields. Enter the database URL in the format 'driver://username:password@host:port/database?options'"></setup-tooltip>
             </p>
-            <input type='text' class='form-control' name='db:url' value=''>
+            <input type='text' class='form-control' name='db:url' value='{{env("DB_URL")}}'>
 
             <p>Database Host:</p>
-            <input type='text' class='form-control' name='db:host' value='localhost'>
+            <input type='text' class='form-control' name='db:host' value='{{env("DB_HOST","localhost")}}'>
 
             <p>Database Port:</p>
-            <input type='text' class='form-control' name='db:port' value='3306'>
+            <input type='text' class='form-control' name='db:port' value='{{env("DB_PORT",""3306")}}'>
 
             <p>
                 Database Unix Socket:
                 <setup-tooltip content="If supplied, this will override the host and port fields below. Enter the absolute path to the unix file socket that will be used to access the database."></setup-tooltip>
             </p>
-            <input type='text' class='form-control' name='db:unix_socket' value=''>
+            <input type='text' class='form-control' name='db:unix_socket' value='{{env("DB_SOCKET")}}'>
 
             <p>
                 Database Username:
                 <setup-tooltip content="For security reasons, we encourage you to not use the root account in production environments."></setup-tooltip>
             </p>
-            <input type='text' class='form-control' name='db:username' value='root'>
+            <input type='text' class='form-control' name='db:username' value='{{env("DB_USERNAME","root")}}'>
 
             <p>Database Password:</p>
-            <input type='password' class='form-control' name='db:password' value='password'>
+            <input type='password' class='form-control' name='db:password' value='{{env("DB_PASSWORD","password")}}'>
 
             <p>
                 Database Name:
                 <setup-tooltip content="Name of existing database. You must create the Polr database manually."></setup-tooltip>
             </p>
-            <input type='text' class='form-control' name='db:name' value='polr'>
+            <input type='text' class='form-control' name='db:name' value='{{env("DB_DATABASE","polr")}}'>
 
 
             <h4>Application Settings</h4>
