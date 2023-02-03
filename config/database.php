@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Str;
-
+use Illuminate\Database\DBAL\TimestampType;
+ 
 return [
 
     /*
@@ -147,5 +148,11 @@ return [
         ],
 
     ],
-
+	
+	# Configure timestamp database intergration
+	'dbal' => [
+		'types' => [
+			'timestamp' => TimestampType::class,
+		],
+	],
 ];

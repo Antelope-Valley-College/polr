@@ -9,8 +9,6 @@ use App\Models\User;
 use App\Helpers\UserHelper;
 use App\Factories\LinkFactory;
 
-error_log('AdminPaginationController');
-
 class AdminPaginationController extends Controller {
     /**
      * Process AJAX DataTables pagination queries from the admin panel.
