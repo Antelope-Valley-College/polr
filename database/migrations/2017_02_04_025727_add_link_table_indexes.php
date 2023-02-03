@@ -24,6 +24,7 @@ class AddLinkTableIndexes extends Migration
         // DB::statement("UPDATE links SET long_url_hash = crc32(long_url);");
 
         DB::table('links')->select(['id', 'long_url_hash', 'long_url'])
+            ->orderBy('created_at')
             ->chunk(100, function($links) {
                 foreach ($links as $link) {
                     DB::table('links')
