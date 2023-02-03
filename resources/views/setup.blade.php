@@ -35,7 +35,7 @@ Setup
             <input type='text' class='form-control' name='db:host' value='{{env("DB_HOST","localhost")}}'>
 
             <p>Database Port:</p>
-            <input type='text' class='form-control' name='db:port' value='{{env("DB_PORT",""3306")}}'>
+            <input type='text' class='form-control' name='db:port' value='{{env("DB_PORT","3306")}}'>
 
             <p>
                 Database Unix Socket:
