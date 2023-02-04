@@ -4,7 +4,7 @@ APP_ENV=production
 APP_DEBUG=false
 
 # 32-character key (e.g 3EWBLwxTfh%*f&xRBqdGEIUVvn4%$Hfi)
-APP_KEY="{{{$APP_KEY}}}"
+APP_KEY="{!!$APP_KEY!!}"
 
 # Your app's name (shown on interface)
 APP_NAME="{{$APP_NAME}}"
@@ -31,19 +31,19 @@ MAXMIND_LICENSE_KEY="{{$MAXMIND_LICENSE_KEY}}"
 
 DB_CONNECTION=mysql
 # Set if your provider requires a connection URL
-DB_URL="{{{$DB_URL}}}"
+DB_URL="{!!$DB_URL!!}"
 # Set to your DB host (e.g localhost)
-DB_HOST="{{{$DB_HOST}}}"
+DB_HOST="{!!$DB_HOST!!}"
 # DB port (e.g 3306)
 DB_PORT={{$DB_PORT}}
 # Set if you connect to your database over a unix socket
-DB_SOCKET="{{{$DB_SOCKET}}}"
+DB_SOCKET="{!!$DB_SOCKET!!}"
 # Set to your DB name (e.g polr)
-DB_DATABASE="{{{$DB_DATABASE}}}"
+DB_DATABASE="{!!$DB_DATABASE!!}"
 # DB credentials
 # e.g root
-DB_USERNAME="{{{$DB_USERNAME}}}"
-DB_PASSWORD="{{{$DB_PASSWORD}}}"
+DB_USERNAME="{!!$DB_USERNAME!!}"
+DB_PASSWORD="{!!$DB_PASSWORD!!}"
 
 # Polr Settings
 
@@ -112,7 +112,7 @@ MAIL_HOST="{{$MAIL_HOST}}"
 # e.g 2525
 MAIL_PORT="{{$MAIL_PORT}}"
 MAIL_USERNAME="{{$MAIL_USERNAME}}"
-MAIL_PASSWORD="{{{$MAIL_PASSWORD}}}"
+MAIL_PASSWORD="{!!$MAIL_PASSWORD!!}"
 # e.g noreply@example.com
 MAIL_FROM_ADDRESS="{{$MAIL_FROM_ADDRESS}}"
 MAIL_FROM_NAME="{{$MAIL_FROM_NAME}}"
