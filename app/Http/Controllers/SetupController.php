@@ -35,8 +35,11 @@ class SetupController extends Controller {
     }
 
     private static function updateGeoIP() {
-        // Output GeoIP database for advanced
-        // analytics
+        // Output GeoIP database for advanced analytics
+        // Ensure there is at least 512 MB RAM for this step.
+        if (ini_get('memory_limit')<512*1024*1024) {
+            ini_set('memory_limit','512M');
+        }
         $exitCode = Artisan::call('geoip:update', []);
         return self::parseExitCode($exitCode);
     }
