@@ -63,4 +63,8 @@ cat >/etc/apache2/sites-enabled/000-default.conf <<EOF
 </VirtualHost>
 EOF
 
+# Setup PHP for development
+cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+
+#Reload Apache config
 apache2ctl -k graceful 
