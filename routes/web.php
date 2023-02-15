@@ -8,6 +8,7 @@ use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\StatsController;
 
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AdminPaginationController;
@@ -59,7 +60,7 @@ Route::get('/setup/finish', [SetupController::class, 'finishSetup'])->name('setu
 Route::get('/{short_url}', [LinkController::class, 'performRedirect']);
 Route::get('/{short_url}/{secret_key}', [LinkController::class, 'performRedirect']);
 
-Route::get('/admin/stats/{short_url}', [LinkController::class, 'displayStats']);
+Route::get('/admin/stats/{short_url}', [StatsController::class, 'displayStats']);
 
 /* POST endpoints */
 
