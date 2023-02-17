@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Install required binaries
+sed -ir 's/http\:/https\:/g' /etc/apt/sources.list
 apt-get update
 apt-get install -y unzip git xmlsec1
 curl https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
