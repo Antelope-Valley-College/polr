@@ -230,6 +230,7 @@ class SetupController extends Controller {
             'SAML_USER_REGEX' => $saml_user_regex,
             'SAML_ADMIN_ATTR' => $saml_admin_attr,
             'SAML_ADMIN_REGEX' => $saml_admin_regex,
+            
             'TMP_SETUP_AUTH_KEY' => $setup_auth_key
         ])->render();
 
