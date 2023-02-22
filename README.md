@@ -23,6 +23,45 @@ Polr is an intrepid, self-hostable open-source link shortening web application w
 
 Installation TL;DR: clone or download this repository, set document root to `public/`, create MySQL database, go to `yoursite.com/setup` and follow instructions.
 
+Developers: Download the deploy.sh and either build_dev.(sh|ps1) files to quickly deploy a local MySQL and Polr container using docker (or syntactically equivalent) container software. Read the build_dev file for use directions. In theory, this could also be used as a starting point for a production Polr container stack.
+
+### PHP Dependencies
+
+We have found that our containers can successfully run Polr when the following modules are installed on PHP 8. We don't thnk that they are all used, however.
+- ctype
+- curl
+- date
+- dom
+- fileinfo
+- filter
+- ftp
+- hash
+- iconv
+- json
+- libxml
+- mbstring
+- mysqlnd
+- openssl
+- pcre
+- PDO
+- pdo_mysql
+- pdo_sqlite
+- Phar
+- posix
+- readline
+- Reflection
+- session
+- SimpleXML
+- sodium
+- SPL
+- sqlite3
+- standard
+- tokenizer
+- xml
+- xmlreader
+- xmlwriter
+- zlib
+
 ### SAML Support(!)
 
 This fork supports SAML 2 integration. SAML integration provides authorization for internal accounts. Accounts can be created on demand. Attributes can be used to flag an account as a permitted user and as an administrator and are always applied or removed at SAML login. SAML can be configured in addition to or instead of internal authorization. A local account can be converted to a SAML account simply by logging in to an IdP with the same username as the local account. A SAML account can be reverted to a local account by resetting the password.
