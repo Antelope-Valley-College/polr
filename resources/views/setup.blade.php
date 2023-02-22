@@ -199,7 +199,7 @@ Setup
             </h4>
             <p>To use this, the IdP must send over the following attributes:</p>
             <table class="table">
-            <tr><th scope="row">NameID</th><td>The NameID must be an immutable value that uniquely identifies a user. If a NameID does not have an associated account, a new one is created. If the username exists, it is converted int a SSO account and can no longer login using a password.</td></tr>
+            <tr><th scope="row">NameID</th><td>The NameID must be an immutable value that uniquely identifies a user. If a NameID does not have an associated account, a new one is created. If the account with the same username exists, it is converted int a SSO account and can no longer login using a password.</td></tr>
             <tr><th scope="row">username</th><td>This must be the username of the person logging in.</td></tr>
             <tr><th scope="row">email</th><td>The current email address of the user.</td></tr>
             </table>
@@ -207,7 +207,7 @@ Setup
             <p>If SAML SSO is turned off, users may request a password reset to gain access once again.</p>
 
             <p>
-                <input type='checkbox' class='form-check-input' name='saml:saml_primary'> Enable SAML
+                <input type='checkbox' class='form-check-input' name='app:saml_enable'> Enable SAML
             </p>            
 
             <p>
