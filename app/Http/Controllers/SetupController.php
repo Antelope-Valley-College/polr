@@ -164,8 +164,8 @@ class SetupController extends Controller {
         $saml_idp_x509cert = $request->input('saml:idp_x509cert');
         $saml_idp_sso = $request->input('saml:idp_sso');
         $saml_idp_slo = $request->input('saml:idp_slo');
-        $saml_user_attr = $request->input('saml:admin_attr');
-        $saml_user_regex = $request->input('saml:admin_regex');
+        $saml_user_attr = $request->input('saml:user_attr');
+        $saml_user_regex = $request->input('saml:user_regex');
         $saml_admin_attr = $request->input('saml:admin_attr');
         $saml_admin_regex = $request->input('saml:admin_regex');
 
@@ -230,7 +230,7 @@ class SetupController extends Controller {
             'SAML_USER_REGEX' => $saml_user_regex,
             'SAML_ADMIN_ATTR' => $saml_admin_attr,
             'SAML_ADMIN_REGEX' => $saml_admin_regex,
-            
+
             'TMP_SETUP_AUTH_KEY' => $setup_auth_key
         ])->render();
 
