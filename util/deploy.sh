@@ -21,10 +21,16 @@ if [ ! -z "$1" ]; then
  git checkout origin/$1 
 fi
 
+# Install the application
+rm composer.lock
+composer.phar install --no-dev -o
+
+
 # Stage an env file so default database config is available
 chmod 755 ../mysql_env.txt
 
-cat > .env <<EOF
+cp .env.setup .env
+cat >> .env <<EOF
 DB_CONNECTION=mysql
 `grep MYSQL_HOST= ../mysql_env.txt|sed 's/MYSQL_HOST/DB_HOST/'`
 DB_PORT=3306
@@ -32,13 +38,6 @@ DB_PORT=3306
 `grep MYSQL_USER= ../mysql_env.txt|sed 's/MYSQL_USER/DB_USERNAME/'`
 `grep MYSQL_PASSWORD= ../mysql_env.txt|sed 's/MYSQL_PASSWORD/DB_PASSWORD/'`
 EOF
-
-# Install the application
-rm composer.lock
-composer.phar install --no-dev -o
-
-# Install the database
-# php artisan migrate:fresh --force
 
 # Fix filesystem permissions
 cd ..
