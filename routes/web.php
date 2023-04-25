@@ -13,7 +13,6 @@ use App\Http\Controllers\StatsController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AdminPaginationController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,8 +83,10 @@ Route::prefix('api/v2')->group(function () {
     Route::post('admin/delete_link', [AjaxController::class, 'deleteLink'])->name('api_delete_link');
     Route::post('admin/edit_link_long_url', [AjaxController::class, 'editLinkLongUrl'])->name('api_edit_link_long_url');
 
-    Route::get('admin/import_View', 'Utm\UtmController@importView');
-    Route::post('admin/importExcel', 'Utm\UtmController@importExcel');
+
+    Route::get('admin/import_View', [\App\Http\Controllers\Utm\UtmController::class, 'importView']);
+    Route::post('admin/importExcel', [\App\Http\Controllers\Utm\UtmController::class, 'importExcel']);
+
 
     Route::get('admin/get_admin_users', [AdminPaginationController::class, 'paginateAdminUsers'])->name('api_get_admin_users');
     Route::get('admin/get_admin_links', [AdminPaginationController::class, 'paginateAdminLinks'])->name('api_get_admin_links');
