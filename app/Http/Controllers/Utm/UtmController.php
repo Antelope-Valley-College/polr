@@ -50,7 +50,7 @@ class UtmController extends Controller
      * @param Request $request
      * @throws Exception
      */
-    private function UploadFile($file)
+        private function UploadFile($file)
     {
         $uploadedFile=$file;
         $filename=time() . $uploadedFile->getClientOriginalName();

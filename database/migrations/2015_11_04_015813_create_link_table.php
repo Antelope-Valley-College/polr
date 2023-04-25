@@ -24,8 +24,7 @@ class CreateLinkTable extends Migration
             $table->string('ip');
             $table->string('creator');
             $table->string('clicks')->default(0);
-            $table->string('secret_key');
-
+            $table->string('secret_key')->nullable();
             $table->boolean('is_disabled')->default(0);
             $table->boolean('is_custom')->default(0);
             $table->boolean('is_api')->default(0);

@@ -52,7 +52,7 @@ Route::get('/activate/{username}/{recovery_key}', [UserController::class, 'perfo
 Route::get('/reset_password/{username}/{recovery_key}', [UserController::class, 'performPasswordReset'])->name('reset_password');
 
 Route::get('/admin', [AdminController::class, 'displayAdminPage'])->name('admin');
-
+http://localhost/phpmyadmin/index.php?route=/table/structure/save
 Route::get('/setup', [SetupController::class, 'displaySetupPage'])->name('setup');
 Route::post('/setup', [SetupController::class, 'performSetup'])->name('psetup');
 Route::get('/setup/finish', [SetupController::class, 'finishSetup'])->name('setup_finish');
@@ -83,6 +83,9 @@ Route::prefix('api/v2')->group(function () {
     Route::post('admin/toggle_link', [AjaxController::class, 'toggleLink'])->name('api_toggle_link');
     Route::post('admin/delete_link', [AjaxController::class, 'deleteLink'])->name('api_delete_link');
     Route::post('admin/edit_link_long_url', [AjaxController::class, 'editLinkLongUrl'])->name('api_edit_link_long_url');
+
+    Route::get('admin/import_View', 'Utm\UtmController@importView');
+    Route::post('admin/importExcel', 'Utm\UtmController@importExcel');
 
     Route::get('admin/get_admin_users', [AdminPaginationController::class, 'paginateAdminUsers'])->name('api_get_admin_users');
     Route::get('admin/get_admin_links', [AdminPaginationController::class, 'paginateAdminLinks'])->name('api_get_admin_links');

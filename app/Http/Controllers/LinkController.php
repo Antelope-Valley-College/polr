@@ -36,7 +36,6 @@ class LinkController extends Controller {
         $is_secret = ($request->input('options') == "s" ? true : false);
         $creator = session('username');
         $link_ip = $request->ip();
-
         try {
             $short_url = LinkFactory::createLink($long_url, $is_secret, $custom_ending, $link_ip, $creator);
         }
