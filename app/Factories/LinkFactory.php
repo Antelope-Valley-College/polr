@@ -99,7 +99,6 @@ class LinkFactory {
         if ($creator) {
             $link->creator = $creator;
         }
-
         if ($is_secret) {
             $rand_bytes_num = intval(env('POLR_SECRET_BYTES'));
             $secret_key = CryptoHelper::generateRandomHex($rand_bytes_num);
@@ -108,7 +107,6 @@ class LinkFactory {
         else {
             $secret_key = false;
         }
-
         $link->save();
 
         if ($return_object) {

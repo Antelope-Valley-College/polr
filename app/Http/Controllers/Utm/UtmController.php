@@ -90,6 +90,7 @@ class UtmController extends Controller
      */
     private function saveExcel($sheet, $data, $spreadsheet)
     {
+
         $sheet->setCellValue('A1', 'Utm');
         $sheet->setCellValue('B1', 'ShotCode ');
         $i=2;
