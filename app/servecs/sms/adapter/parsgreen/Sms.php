@@ -1,6 +1,6 @@
 <?php
 
-namespace torfeh\modules\bases\Http\servecs\sms\adapter\Parsgreen;
+namespace App\servecs\sms\adapter;
 use GuzzleHttp\Client;
 use http\Client\Request;
 use Illuminate\Support\Facades\Http;

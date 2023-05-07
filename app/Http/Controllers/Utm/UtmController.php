@@ -9,9 +9,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use torfeh\modules\bases\Http\servecs\sms\SmsInterface;
 
 class UtmController extends Controller
 {
+    protected $smss;
+
+    public function __construct(SmsInterface $sms)
+    {
+        $this->smss = $sms;
+    }
+
     /**
      * @return \Illuminate\View\View|\Laravel\Lumen\Application
      */
@@ -28,35 +36,37 @@ class UtmController extends Controller
      */
     public function importExcel(Request $request)
     {
-        $validator=\Validator::make($request->all(), [
-            'file'=>'required|mimes:xlsx, csv, xls'
+
+        $validator = \Validator::make($request->all(), [
+            'file' => 'required|mimes:xlsx, csv, xls'
         ]);
+
         if ($validator->fails())
-            return response()->json(['status'=>false, 'error'=>$validator->errors()->all()], 401);
+            return response()->json(['status' => false, 'error' => $validator->errors()->all()], 401);
 
-        $file=$request->file('file');
-        $path=$this->UploadFile($file);
+        $file = $request->file('file');
 
-        list($data, $spreadsheet, $sheet)=$this->getLoad($path);
+        $path = $this->UploadFile($file);
 
-        $addressFile=$this->saveExcel($sheet, $data, $spreadsheet);
+        list($data, $spreadsheet, $sheet) = $this->getLoad($path);
+        $addressFile = $this->saveExcel($sheet, $data, $spreadsheet);
 
         File::delete($path);
 
-        return response()->json(['status'=>true, 'file'=>$addressFile]);
+        return response()->json(['status' => true, 'file' => $addressFile]);
     }
 
     /**
      * @param Request $request
      * @throws Exception
      */
-        private function UploadFile($file)
+    private function UploadFile($file)
     {
-        $uploadedFile=$file;
-        $filename=time() . $uploadedFile->getClientOriginalName();
-        $result=$uploadedFile->move(public_path() . '/file/', $filename);
+        $uploadedFile = $file;
+        $filename = time() . $uploadedFile->getClientOriginalName();
+        $result = $uploadedFile->move(public_path() . '/file/', $filename);
 
-        if ( $result->getRealPath() ) {
+        if ($result->getRealPath()) {
             return $result->getRealPath();
         }
 
@@ -70,14 +80,14 @@ class UtmController extends Controller
      */
     private function getLoad($path)
     {
-        $reader=new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         $reader->setReadDataOnly(true);
-        // Read the spreadsheet file.
-        $reader=$reader->load($path);
-        $data=$reader->getActiveSheet()->toArray(null, true, true, true);
 
-        $spreadsheet=new Spreadsheet();
-        $sheet=$spreadsheet->getActiveSheet();
+        // Read the spreadsheet file.
+        $reader = $reader->load($path);
+        $data = $reader->getActiveSheet()->toArray(null, true, true, true);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
         return array($data, $spreadsheet, $sheet);
     }
 
@@ -90,18 +100,19 @@ class UtmController extends Controller
      */
     private function saveExcel($sheet, $data, $spreadsheet)
     {
-
+              dd("sdf");
         $sheet->setCellValue('A1', 'Utm');
         $sheet->setCellValue('B1', 'ShotCode ');
-        $i=2;
-        foreach($data as $key=>$val) {
-            if ( $val['A'] != "Link" ) {
+
+        $i = 2;
+        foreach ($data as $key => $val) {
+            if ($val['A'] != "Link") {
                 $sheet->setCellValue('A' . $i++, $val["A"] . '?utm_campaign=' . $val["B"] . '&utm_source=' . $val["C"] . '&utm_medium=' . $val["D"]);
                 $sheet->setCellValue('B' . ($i - 1), LinkFactory::createLink($val["A"] . '?utm_campaign=' . $val["B"] . '&utm_source=' . $val["C"] . '&utm_medium=' . $val["D"]));
             }
         }
-        $addressFile='/file/' . time() . '.xlsx';
-        $writer=new Xlsx($spreadsheet);
+        $addressFile = '/file/' . time() . '.xlsx';
+        $writer = new Xlsx($spreadsheet);
         $writer->save(public_path() . $addressFile);
         return $addressFile;
     }

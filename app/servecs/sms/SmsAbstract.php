@@ -1,6 +1,6 @@
 <?php
 
-namespace torfeh\modules\bases\Http\servecs\sms;
+namespace App\servecs\sms;
 
  abstract class SmsAbstract
 {
