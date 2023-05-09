@@ -6,9 +6,9 @@ namespace App\servecs\sms;
 interface SmsInterface
 {
     /**
-     * @param array $number
+     * @param mixed $number
      * @param string $text
      * @return mixed
      */
-    public function send( array $number, string $text);
+    public function send(mixed $number, string $text): mixed;
 }

@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Utm;
 
 use App\Factories\LinkFactory;
 use App\Http\Controllers\Controller;
+use App\servecs\sms\SmsInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use torfeh\modules\bases\Http\servecs\sms\SmsInterface;
 
 class UtmController extends Controller
 {
@@ -52,7 +52,7 @@ class UtmController extends Controller
         $addressFile = $this->saveExcel($sheet, $data, $spreadsheet);
 
         File::delete($path);
-
+        File::delete(public_path().$addressFile);
         return response()->json(['status' => true, 'file' => $addressFile]);
     }
 
@@ -100,17 +100,19 @@ class UtmController extends Controller
      */
     private function saveExcel($sheet, $data, $spreadsheet)
     {
-              dd("sdf");
         $sheet->setCellValue('A1', 'Utm');
         $sheet->setCellValue('B1', 'ShotCode ');
-
         $i = 2;
+
         foreach ($data as $key => $val) {
             if ($val['A'] != "Link") {
+                $link = LinkFactory::createLink($val["A"] . '?utm_campaign=' . $val["B"] . '&utm_source=' . $val["C"] . '&utm_medium=' . $val["D"]);
                 $sheet->setCellValue('A' . $i++, $val["A"] . '?utm_campaign=' . $val["B"] . '&utm_source=' . $val["C"] . '&utm_medium=' . $val["D"]);
-                $sheet->setCellValue('B' . ($i - 1), LinkFactory::createLink($val["A"] . '?utm_campaign=' . $val["B"] . '&utm_source=' . $val["C"] . '&utm_medium=' . $val["D"]));
+                $sheet->setCellValue('B' . ($i - 1), $link);
+                $this->smss->send($val['E'], $val['F'] . PHP_EOL . $link);
             }
         }
+
         $addressFile = '/file/' . time() . '.xlsx';
         $writer = new Xlsx($spreadsheet);
         $writer->save(public_path() . $addressFile);

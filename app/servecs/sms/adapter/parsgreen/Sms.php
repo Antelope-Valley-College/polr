@@ -1,10 +1,10 @@
 <?php
 
-namespace App\servecs\sms\adapter;
-use GuzzleHttp\Client;
-use http\Client\Request;
+namespace App\servecs\sms\adapter\parsgreen;
+
+use App\servecs\sms\SmsInterface;
+
 use Illuminate\Support\Facades\Http;
-use torfeh\modules\bases\Http\servecs\sms\SmsInterface;
 
 class Sms implements SmsInterface
 {
@@ -13,6 +13,7 @@ class Sms implements SmsInterface
     protected mixed $gateway_url;
 
     protected mixed $api_key;
+
     /**
      * This file passes the items to the item variables before calling the settings that you read from the config folder
      * ParsgreenSms constructor.
@@ -26,14 +27,14 @@ class Sms implements SmsInterface
 
     /**
      * This method is called from the interface file and is responsible for passing the information given to it in the control
-     * @param array $number
+     * @param mixed $number
      * @param string $text
-     * @return array|\Illuminate\Contracts\Foundation\Application|null
+     * @return mixed
      */
-    public function send(array $number, string $text)
-    {
-        return $this->_send($number, $this->sender, $text);
-    }
+     public function send(mixed $number, string $text): mixed
+     {
+         return $this->_send($number, $this->sender, $text);
+     }
 
     /**
      * * This method is responsible for receiving this information, pass it to the sending method, and also checks
