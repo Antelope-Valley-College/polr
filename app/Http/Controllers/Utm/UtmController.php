@@ -25,6 +25,10 @@ class UtmController extends Controller
      */
     public function importView()
     {
+        if (!$this->isLoggedIn()) {
+            return redirect(route('login'))->with('error', 'Please login to access your dashboard.');
+        }
+
         return view('importFile');
     }
 
@@ -43,16 +47,13 @@ class UtmController extends Controller
 
         if ($validator->fails())
             return response()->json(['status' => false, 'error' => $validator->errors()->all()], 401);
-
         $file = $request->file('file');
-
         $path = $this->UploadFile($file);
-
         list($data, $spreadsheet, $sheet) = $this->getLoad($path);
         $addressFile = $this->saveExcel($sheet, $data, $spreadsheet);
 
         File::delete($path);
-        File::delete(public_path().$addressFile);
+//        File::delete(public_path().$addressFile);
         return response()->json(['status' => true, 'file' => $addressFile]);
     }
 

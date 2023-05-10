@@ -18,8 +18,8 @@
                 @if ($role == $admin_role)
                     <li role='presentation' class='admin-nav-item'><a href='#admin'>Admin</a></li>
                     <li role='presentation' class='admin-nav-item'><a href='#adminLinke'>adminLinke</a></li>
-                    <li role='presentation' aria-controls="import_View" class='admin-nav-item'><a href='#import_View'>export
-                            utm</a></li>
+                    <li role='presentation' aria-controls="import_View" class='admin-nav-item'><a href='#import_View'>export utm</a></li>
+                    <li role='presentation' aria-controls="sendSms" class='admin-nav-item'><a href='#sendSms'>sendSms</a></li>
                 @endif
                 @if ($api_active == 1)
                     <li role='presentation' aria-controls="developer" class='admin-nav-item'><a href='#developer'>Developer</a>
@@ -102,6 +102,9 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="import_View">
                         @include('importUtm')
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="sendSms">
+                        @include('sendSms')
                     </div>
                 @endif
                 @if ($api_active == 1)

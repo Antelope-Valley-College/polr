@@ -86,6 +86,7 @@ Route::prefix('api/v2')->group(function () {
 
     Route::get('admin/import_View', [\App\Http\Controllers\Utm\UtmController::class, 'importView']);
     Route::post('admin/importExcel', [\App\Http\Controllers\Utm\UtmController::class, 'importExcel']);
+    Route::post('admin/sendSms', [\App\Http\Controllers\SendSmsController::class, 'send']);
 
 
     Route::get('admin/get_admin_users', [AdminPaginationController::class, 'paginateAdminUsers'])->name('api_get_admin_users');
