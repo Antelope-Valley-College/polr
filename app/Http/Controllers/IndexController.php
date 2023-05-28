@@ -10,6 +10,10 @@ class IndexController extends Controller {
      * @return Response
      */
     public function showIndexPage(Request $request) {
+        if (!$this->isLoggedIn()) {
+            return redirect(route('login'))->with('error', 'برای استفاده از خدمات سایت اول باید وارد شوید');
+        }
+
         if (env('POLR_SETUP_RAN') != true) {
             return redirect(route('setup'));
         }
