@@ -42,6 +42,20 @@
     <input type="hidden" name='_token' value='{{csrf_token()}}' />
 </form>
 
+<script>
+    const input = document.querySelector('input[name="link-url"]');
+
+    input.addEventListener('invalid', function (event) {
+      if (event.target.validity.typeMismatch) {
+        event.target.setCustomValidity('Please enter a valid URL and ensure you have included the http:// or https:// part of the link');
+      }
+    })
+
+    input.addEventListener('input', function (event) {
+      event.target.setCustomValidity('');
+    })
+</script>
+
 <div id='tips' class='text-muted tips'>
     <i class='fa fa-spinner'></i> Loading Tips...
 </div>
