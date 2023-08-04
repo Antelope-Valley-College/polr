@@ -14,7 +14,7 @@ $(function() {
     $('#check-link-availability').click(function() {
         var custom_link = $('.custom-url-field').val();
         var request = $.ajax({
-            url: "/api/v2/link_avail_check",
+            url: "/api/v3/link_avail_check",
             type: "POST",
             data: {
                 link_ending: custom_link

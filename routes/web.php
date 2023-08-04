@@ -71,7 +71,7 @@ Route::post('/reset_password/{username}/{recovery_key}', [UserController::class,
 
 Route::post('/admin/action/change_password', [AdminController::class, 'changePassword'])->name('change_password');
 
-Route::prefix('api/v2')->group(function () {
+Route::prefix('api/v3')->group(function () {
     Route::post('link_avail_check', [AjaxController::class, 'checkLinkAvailability'])->name('api_link_check');
     Route::post('admin/toggle_api_active', [AjaxController::class, 'toggleAPIActive'])->name('api_toggle_api_active');
     Route::post('admin/generate_new_api_key', [AjaxController::class, 'generateNewAPIKey'])->name('api_generate_new_api_key');

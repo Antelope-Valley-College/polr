@@ -1,3 +1,3 @@
 /* Polr JS Constants */
 
-const BASE_API_PATH = '/api/v2/';
+const BASE_API_PATH = '/api/v3/';
