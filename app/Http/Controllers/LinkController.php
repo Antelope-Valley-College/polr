@@ -99,7 +99,16 @@ class LinkController extends Controller {
             ClickHelper::recordClick($link, $request);
         }
         // Redirect to final destination
-        return redirect()->to($long_url, 301);
+        if (env('ENABLE_RDR_NOTICE')){
+            return view('redirect_notice', [
+                'long_url' => $long_url,
+                'delay_time' => env('RDR_DELAY_TIME', 10),
+                'rdr_message' => env('RDR_MESSAGE')
+            ]);
+        }
+        else{
+            return redirect()->to($long_url, 301);
+        }
     }
 
 }
