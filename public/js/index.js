@@ -54,7 +54,7 @@ $(function() {
     function changeTips(tcase) {
         switch (tcase) {
             case 1:
-                setTip('Create an account to keep track of your links');
+                setTip('Remember to include the http:// or https:// part of your original link');
                 break;
             case 2:
                 setTip('Did you know you can change the URL ending by clicking on "Link Options"?');
