@@ -1,7 +1,8 @@
 $(function() {
     var optionsButton = $('#show-link-options');
     $('#options').hide();
-    var slide = 0;
+    var slide = 1;
+    $("#options").slideDown();
     optionsButton.click(function() {
         if (slide === 0) {
             $("#options").slideDown();
@@ -57,7 +58,7 @@ $(function() {
                 setTip('Remember to include the http:// or https:// part of your original link');
                 break;
             case 2:
-                setTip('Did you know you can change the URL ending by clicking on "Link Options"?');
+                setTip('If you need additional help, email admin@isoc.link');
                 i = 1;
                 break;
         }
