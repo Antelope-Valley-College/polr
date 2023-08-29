@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\servecs\sms\adapter\parsgreen\Sms;
+use App\servecs\sms\adapter\Kavenegar\Sms;
 use App\servecs\sms\SmsInterface;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;

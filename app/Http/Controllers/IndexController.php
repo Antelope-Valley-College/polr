@@ -1,15 +1,20 @@
 <?php
+
 namespace App\Http\Controllers;
+
+use App\servecs\sms\SmsInterface;
 use Illuminate\Http\Request;
 use App\Helpers\CryptoHelper;
 
-class IndexController extends Controller {
+class IndexController extends Controller
+{
     /**
      * Show the index page.
      *
      * @return Response
      */
-    public function showIndexPage(Request $request) {
+    public function showIndexPage(Request $request)
+    {
         if (!$this->isLoggedIn()) {
             return redirect(route('login'))->with('error', 'برای استفاده از خدمات سایت اول باید وارد شوید');
         }
@@ -21,8 +26,7 @@ class IndexController extends Controller {
         if (!env('SETTING_PUBLIC_INTERFACE') && !self::isLoggedIn()) {
             if (env('SETTING_INDEX_REDIRECT')) {
                 return redirect()->to(env('SETTING_INDEX_REDIRECT'));
-            }
-            else {
+            } else {
                 return redirect()->to(route('login'));
             }
         }

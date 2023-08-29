@@ -7,6 +7,8 @@
             <span class="icon-bar"></span>
         </button>
 
+
+
         <!-- Output sign in/sign out buttons appropriately -->
         <div class="navbar-header">
 			<img src="/img/custom_logo.png" class="navbar-brand d-inline-block align-top" alt="Logo" style="display: none;padding: 10px 0px 10px 15px;" onload="this.style.display=''">

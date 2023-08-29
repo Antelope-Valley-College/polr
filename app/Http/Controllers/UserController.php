@@ -31,15 +31,12 @@ class UserController extends Controller {
         }
         return view('login');
     }
-
     public function displaySignupPage(Request $request) {
         return view('signup');
     }
-
     public function displayLostPasswordPage(Request $request) {
         return view('lost_password');
     }
-
     public function performLogoutUser(Request $request) {
         if (in_array('SAML', explode(',', env('POLR_LOGIN_MODES'))) && env('SAML_IDP_SLO_URL')) {
             $auth = new Auth(SamlFactory::getSettings());
@@ -60,8 +57,8 @@ class UserController extends Controller {
         $request->session()->forget('saml');
         return redirect()->route('index');
     }
-
-    public function performLogin(Request $request) {
+    public function performLogin(Request $request)
+    {
         $username = $request->input('username');
         $password = $request->input('password');
 
@@ -79,7 +76,6 @@ class UserController extends Controller {
             return redirect('login')->with('error', 'Invalid password or inactivated account. Try again.');
         }
     }
-
     public function performSignup(Request $request) {
         if (env('POLR_ALLOW_ACCT_CREATION') == false) {
             return redirect(route('index'))->with('error', 'Sorry, but registration is disabled.');
