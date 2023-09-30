@@ -107,7 +107,7 @@ class LinkController extends Controller {
             ]);
         }
         else{
-            return redirect()->to($long_url, 301);
+            return redirect()->to($long_url, 302);
         }
     }
 
