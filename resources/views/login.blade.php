@@ -6,7 +6,10 @@
 
 @section('content')
 <div class="center-text">
-    <h1>Login</h1><br/><br/>
+    <h1>Login</h1><br/>
+    @if (env('ENABLE_LOGIN_MESSAGE') == true)
+        <p>{{env('LOGIN_MESSAGE')}}</p>
+    @endif
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <form action="login" method="POST">

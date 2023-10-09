@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -13,12 +11,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('links', function (Blueprint $table)
-        {
-            $table->string('secret_key')->nullable()->change();
-            $table->timestamp('created_at')->useCurrent()->change();
-            $table->timestamp('updated_at')->useCurrentOnUpdate()->change();
-        });
+        DB::statement("
+            ALTER TABLE links
+            CHANGE secret_key secret_key VARCHAR(255) CHARACTER SET utf8mb3 DEFAULT NULL COLLATE `utf8mb3_unicode_ci`,
+            CHANGE created_at created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            CHANGE updated_at updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL;
+        ");
     }
 
     /**
@@ -28,12 +26,11 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('links', function (Blueprint $table)
-        {
-            $table->string('secret_key')->change();            
-            $table->timestamp('created_at')->useCurrent()->change();
-            $table->timestamp('updated_at')->useCurrentOnUpdate()->change();
-        });
-        
+        DB::statement("
+            ALTER TABLE links
+            CHANGE secret_key secret_key VARCHAR(255) DEFAULT NULL,
+            CHANGE created_at created_at TIMESTAMP NULL,
+            CHANGE updated_at updated_at TIMESTAMP NULL;
+        ");
     }
 };

@@ -4,7 +4,7 @@
 }
 
 .site-url-field {
-    color: #8b1c40;
+    color: green;
     display: inline;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .check-btn {
-    margin-bottom: 30px;
+    margin: 30px 0px;
 }
 
 #link-availability-status {
