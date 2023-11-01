@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AdminPaginationController;
+use App\Http\Controllers\Api\ApiLinkController;
+use App\Http\Controllers\Api\ApiAnalyticsController;
 
 
 /*
@@ -18,8 +20,7 @@ use App\Http\Controllers\AdminPaginationController;
 |
 */
 
-/*
-Route::prefix('api/v2')->group(function () {
+Route::prefix('v2')->group(function () {
     Route::post('link_avail_check', [AjaxController::class, 'checkLinkAvailability'])->name('api_link_check');
     Route::post('admin/toggle_api_active', [AjaxController::class, 'toggleAPIActive'])->name('api_toggle_api_active');
     Route::post('admin/generate_new_api_key', [AjaxController::class, 'generateNewAPIKey'])->name('api_generate_new_api_key');
@@ -36,4 +37,18 @@ Route::prefix('api/v2')->group(function () {
     Route::get('admin/get_admin_links', [AdminPaginationController::class, 'paginateAdminLinks'])->name('api_get_admin_links');
     Route::get('admin/get_user_links', [AdminPaginationController::class, 'paginateUserLinks'])->name('api_get_user_links');
 });
-*/
+
+Route::prefix('v2')->group(function () {
+    /* API shorten endpoints */
+    Route::get('action/shorten', [ApiLinkController::class, 'shortenLink'])->name('api_shorten_url');
+    Route::post('action/shorten', [ApiLinkController::class, 'shortenLink'])->name('api_shorten_url');
+    Route::post('action/shorten_bulk', [ApiLinkController::class, 'shortenLinksBulk'])->name('api_shorten_url_bulk');
+
+    /* API lookup endpoints */
+    Route::get('action/lookup', [ApiLinkController::class, 'lookupLink'])->name('api_lookup_url');
+    Route::post('action/lookup', [ApiLinkController::class, 'lookupLink'])->name('api_lookup_url');
+
+    /* API data endpoints */
+    Route::get('data/link', [ApiAnalyticsController::class, 'lookupLinkStats'])->name('api_link_analytics');
+    Route::post('data/link', [ApiAnalyticsController::class, 'lookupLinkStats'])->name('api_link_analytics');
+});
