@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // If the protocol is set to HTTPS, force HTTPS scheme for URLs
+        if (env('APP_PROTOCOL') === 'https://') {
+            \URL::forceScheme('https');
+        }
     }
 }
